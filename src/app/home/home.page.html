@@ -1,14 +1,40 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>
+            My News App
+        </ion-title>
+        <ion-buttons slot="end" routerLink="/settings" routerDirection="forward">
+            <ion-icon name="settings"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+    <ion-grid>
+        <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+                <ion-list>
+                <ion-item lines="none">
+                    <h1>Welcome {{username}}</h1>
+                </ion-item>
+                    <ion-button expand="block" routerLink="/news" routerDirection="forward">
+                        <ion-icon name="globe"></ion-icon>
+                        News
+                    </ion-button>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size-sm="6" offset-sm="3">
+                <ion-list>
+                    <ion-item *ngFor="let quote of qod">
+                        <ion-label>
+                            <h1 class="ion-text-wrap">'{{quote.quote}}</h1>
+                            <p>{{quote.author}}</p>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
