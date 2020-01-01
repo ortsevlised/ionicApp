@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Settings} from './settings.model';
 import {BehaviorSubject} from 'rxjs';
-import {Storage} from '@ionic/storage';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class SettingsService {
+    public defaultTitleSize = '18';
+    public defaultDescSize = '16';
+    public defaultCountry = 'ie';
+
     private _settings = new BehaviorSubject<Settings>(
-        new Settings('aa', 'ie', '3', '3'));
-
-    getStorage(){
-
-    }
+        new Settings('', this.defaultCountry, this.defaultTitleSize, this.defaultDescSize));
 
     get settings() {
         return this._settings.asObservable();
@@ -30,16 +30,6 @@ export class SettingsService {
             titleFs,
             descFs
         );
-        this.storage.set('settings', {
-            enteredName: name,
-            selectedCountry: country,
-            selectedTitleFs: titleFs,
-            selectedDecFs: descFs
-        });
-        console.log(newSetting);
         return this._settings.next(newSetting);
-    }
-
-    constructor(private storage: Storage) {
     }
 }

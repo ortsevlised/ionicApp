@@ -5,7 +5,6 @@ import {QuotesProviderService} from '../providers/quotes-provider.service';
 @Component({
     selector: 'app-home',
     templateUrl: 'home.page.html',
-    styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
     private username: string;
@@ -21,7 +20,7 @@ export class HomePage implements OnInit {
         this.storage.get('settings')
             .then((data) => {
                 if (data != null) {
-                    this.username = data.enteredName;
+                    this.username = data.name;
                 }
             });
     }

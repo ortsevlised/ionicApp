@@ -13,12 +13,12 @@
                 <ion-col size-sm="6" offset-sm="3">
                     <ion-list>
                         <ion-item>
-                            <ion-label>Name</ion-label>
+                            <ion-label position="floating">Name</ion-label>
                             <ion-input type="text" formControlName="name" placeholder="Enter your name"></ion-input>
                         </ion-item>
                         <ion-row *ngIf="!form.get('name').valid && form.get('name').touched">
                             <ion-col size-sm="6" offset-sm="3">
-                                <p>The name can't be empty</p>
+                                <p style="color: red;" >The name can't be empty</p>
                             </ion-col>
                         </ion-row>
                         <ion-item>
@@ -40,6 +40,18 @@
                                         value="{{item.value}}"
                                 ></ion-radio>
                             </ion-item>
+                        </ion-radio-group>
+                        <ion-list-header>
+                                <ion-label>Description Font Size</ion-label>
+                            </ion-list-header>
+                            <ion-radio-group formControlName="descFs" name="descFs">
+                                <ion-item *ngFor="let item of fontSizes">
+                                    <ion-label>{{item.name}}</ion-label>
+                                    <ion-radio
+                                            name="{{item.name}}"
+                                            value="{{item.value}}"
+                                    ></ion-radio>
+                                </ion-item>
                         </ion-radio-group>
                     </ion-list>
                     <ion-button type="submit" color="primary" expand="block" [disabled]="!form.valid">Save

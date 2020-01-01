@@ -13,6 +13,7 @@ import {NewsProviderService} from './providers/news-provider.service';
 import {HttpClientModule} from '@angular/common/http';
 import {QuotesProviderService} from './providers/quotes-provider.service';
 
+enableProdMode();
 
 @NgModule({
     declarations: [AppComponent],
@@ -32,5 +33,6 @@ import {QuotesProviderService} from './providers/quotes-provider.service';
     ],
     bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }

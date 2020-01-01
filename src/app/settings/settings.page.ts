@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {SettingsService} from './settings.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Storage} from '@ionic/storage';
-
+import {NavController} from '@ionic/angular';
 
 @Component({
     selector: 'app-settings',
     templateUrl: './settings.page.html',
 })
-export class SettingsPage  {
+export class SettingsPage {
     private form: FormGroup;
     countries = [
         {id: 'ie', label: 'Ireland'},
@@ -17,109 +17,62 @@ export class SettingsPage  {
     ];
 
     fontSizes = [
-        {value: 1, name: '1', checked: false},
-        {value: 2, name: '2', checked: false},
-        {value: 3, name: '3', checked: true},
-        {value: 4, name: '4', checked: false},
-        {value: 5, name: '5', checked: false}
+        {value: 8, name: '1'},
+        {value: 12, name: '2'},
+        {value: 16, name: '3'},
+        {value: 18, name: '4'},
+        {value: 20, name: '5'}
     ];
 
-    constructor(private settingsService: SettingsService, private storage: Storage) {
-        this.settingsService.settings.subscribe(loadedSettings =>
-            this.form = new FormGroup({
-                    name: new FormControl(null, {
-                        updateOn: 'blur',
-                        validators: [Validators.required]
-                    }),
-                    country: new FormControl(loadedSettings.country || 'ie', {
-                        updateOn: 'blur'
-                    }),
-                    titleFs: new FormControl(loadedSettings.titleFs || '3', {
-                        updateOn: 'submit'
-                    }),
-                    descFs: new FormControl(loadedSettings.descFs || '3', {
-                        updateOn: 'submit'
-                    }),
+    constructor(private navCtrl: NavController, private settingsService: SettingsService, private storage: Storage) {
+        this.settingsService.settings.subscribe(settings =>
+            this.form = this.getFormGroup(settings));
+    }
+
+    ionViewWillEnter() {
+        this.storage.get('settings')
+            .then((data) => {
+                if (data != null) {
+                    this.form = this.getFormGroup(data);
                 }
-            ));
+            });
     }
 
-
-    onViewWillEnter() {
-        console.log('wasda');
-        this.settingsService.settings.subscribe();
-    }    /*
-            ionViewWillEnter() {
-                this.settingsService.getSettings.subscribe(
-
-                );
-                this.storage.get('settings')
-                    .then((data) => {
-                        console.log(data);
-                        if (data != null) {
-                            this.settingsService.updateSettings(
-                                data.name,
-                                data.country,
-                                data.titleFs,
-                                data.descFs);
-                        }
-                    });
-            }*/
-
- onSubmit() {
-     this.settingsService.updateSettings(
-         this.form.get('name').value,
-         this.form.get('country').value,
-         this.form.get('titleFs').value,
-         this.form.get('descFs').value);
- }
-}
-
-/* name: string;
-    selectedCountry: string;
-    titleFs: number;
-    descFs: number;
-    form: FormGroup;
-
-
-    constructor(private storage: Storage) {
-    }
-
-    ngOnInit() {
-        this.form = new FormGroup({
-                name: new FormControl(null, {
+    private getFormGroup(settings) {
+        return new FormGroup({
+                name: new FormControl(settings.name || '', {
                     updateOn: 'blur',
                     validators: [Validators.required]
                 }),
-                country: new FormControl(this.selectedCountry || 'ie', {
+                country: new FormControl(settings.country || 'ie', {
                     updateOn: 'blur'
                 }),
-                titleFs: new FormControl(this.titleFs || '3', {
+                titleFs: new FormControl(settings.titleFs || '4', {
                     updateOn: 'submit'
                 }),
-                descFs: new FormControl(this.descFs || '3', {
+                descFs: new FormControl(settings.descFs || '3', {
                     updateOn: 'submit'
                 }),
             }
         );
     }
 
-    ionViewWillEnter() {
-        this.storage.get('settings')
-            .then((data) => {
-                console.log(data);
-                if (data != null) {
-                    this.name = data.name;
-                    this.selectedCountry = data.selectedCountry;
-                    this.titleFs = data.titleFs;
-                    this.descFs = data.descFs;
-                }
+    onSubmit() {
+        this.settingsService.updateSettings(
+            this.form.get('name').value,
+            this.form.get('country').value,
+            this.form.get('titleFs').value,
+            this.form.get('descFs').value);
+        this.storage.set('settings',
+            {
+                name: this.form.get('name').value,
+                country: this.form.get('country').value,
+                titleFs: this.form.get('titleFs').value,
+                descFs: this.form.get('descFs').value
             });
-        console.log('1' + this.name);
-        console.log('2' + this.selectedCountry);
-        console.log('3' + this.titleFs);
-        console.log('4' + this.titleFs);
-
+        this.navCtrl.back();
     }
+}
 
-   */
+
+

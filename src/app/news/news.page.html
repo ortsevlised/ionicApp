@@ -4,6 +4,9 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
+        <ion-buttons slot="end" routerLink="/settings" routerDirection="forward">
+            <ion-icon name="settings"></ion-icon>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
@@ -17,8 +20,8 @@
                             <img [src]="new.urlToImage">
                         </ion-thumbnail>
                         <ion-label>
-                            <h3>{{new.title}}</h3>
-                            <p>{{new.description}}</p>
+                            <p class=ion-text-wrap [ngStyle]="{'font-size':[titleFs]+'px'}"><b>{{new.title}}</b></p>
+                            <p class=ion-text-wrap [ngStyle]="{'font-size':[descFs]+'px'}">{{new.description}}</p>
                         </ion-label>
                     </ion-item>
                 </ion-list>
